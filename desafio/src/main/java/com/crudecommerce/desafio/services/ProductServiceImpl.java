@@ -5,6 +5,7 @@ import com.crudecommerce.desafio.entities.Product;
 import com.crudecommerce.desafio.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,21 +17,25 @@ public class ProductServiceImpl implements ProductService{
     private ProductRepository repository;
 
     @Override
+    @Transactional(readOnly = true)
     public List<Product> findAll() {
         return (List<Product>) repository.findAll();
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<Product> findById(Long id) {
         return repository.findById(id);
     }
 
     @Override
+    @Transactional()
     public Product save(Product product) {
         return repository.save(product);
     }
 
     @Override
+    @Transactional()
     public Optional<Product> update(Long id, Product product) {
         Optional<Product> productOptional = repository.findById(id);
         if(productOptional.isPresent()){
@@ -44,6 +49,7 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
+    @Transactional()
     public Optional<Product> delete(Long id) {
         Optional<Product> productOptional = repository.findById(id);
         productOptional.ifPresent(product -> {

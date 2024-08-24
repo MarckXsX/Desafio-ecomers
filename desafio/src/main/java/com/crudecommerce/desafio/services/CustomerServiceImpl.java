@@ -50,6 +50,7 @@ public class CustomerServiceImpl implements CustomerService{
     }
 
     @Override
+    @Transactional()
     public Optional<Customer> delete(Long id) {
         Optional<Customer> customerOptional = repository.findById(id);
         customerOptional.ifPresent(customer -> {

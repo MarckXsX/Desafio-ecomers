@@ -7,6 +7,7 @@ import com.crudecommerce.desafio.repositories.OrderReposity;
 import com.crudecommerce.desafio.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,21 +22,25 @@ public class OrderServiceImpl implements OrderService{
     private ProductRepository productRepository;
 
     @Override
+    @Transactional(readOnly = true)
     public List<Order> findAll() {
         return (List<Order>) repository.findAll();
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<Order> findById(Long id) {
         return repository.findById(id);
     }
 
     @Override
+    @Transactional()
     public Order saveOrder(Order order) {
         return repository.save(order);
     }
 
     @Override
+    @Transactional()
     public Order adProduct(Long id, List<Long> idsProducts) {
         Optional<Order> orderOptional = repository.findById(id);
         if (orderOptional.isPresent()){
@@ -52,6 +57,7 @@ public class OrderServiceImpl implements OrderService{
     }
 
     @Override
+    @Transactional()
     public Optional<Order> update(Long id, Order orderUpdate, List<Long> idsProducts) {
         Optional<Order> optionalOrder = repository.findById(id);
         if(optionalOrder.isPresent()){
