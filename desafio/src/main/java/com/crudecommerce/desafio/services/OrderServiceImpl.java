@@ -78,6 +78,7 @@ public class OrderServiceImpl implements OrderService{
     }
 
     @Override
+    @Transactional()
     public Optional<Order> delete(Long id) {
         Optional<Order> orderOptional = repository.findById(id);
         orderOptional.ifPresent(order -> {

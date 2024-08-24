@@ -19,7 +19,7 @@ public class Product {
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @ManyToMany(mappedBy = "products", cascade = {CascadeType.PERSIST, CascadeType.MERGE}) //Modificar
+    @ManyToMany(mappedBy = "products", cascade = CascadeType.ALL) //Modificar
     private List<Order> orders;
 
     public Long getId() {
